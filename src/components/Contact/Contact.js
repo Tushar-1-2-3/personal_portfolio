@@ -14,6 +14,8 @@ function Contact() {
   });
   const [status, setStatus] = useState("");
 
+  console.log("Contact component loaded");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
