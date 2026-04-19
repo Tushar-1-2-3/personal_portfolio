@@ -37,12 +37,8 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model('Contact', contactSchema);
 
-// Middleware
-app.use(cors({
-  origin: ['https://69e4accb35eafee7600bcc62--tusharbhavik.netlify.app', 'https://tusharbhavik.netlify.app', 'http://localhost:3000'],
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
+// Middleware - Allow all origins for now
+app.use(cors());
 app.use(express.json());
 
 // Health check endpoint to wake up the service
