@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // MongoDB Connection
-const MONGODB_URI = 'mongodb+srv://Tushar10:Tushar10@cluster0.d0vr0nu.mongodb.net/?appName=Cluster0';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://Tushar10:Tushar10@cluster0.d0vr0nu.mongodb.net/?appName=Cluster0';
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
