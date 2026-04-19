@@ -22,9 +22,8 @@ function Contact() {
     e.preventDefault();
     setStatus("Sending...");
     
-    // Updated to use local backend for MongoDB storage
-    // Once deployed, change this URL to your hosted backend URL
-    const backendUrl = "http://localhost:5000/api/contact";
+    // Production backend URL
+    const backendUrl = "https://portfolio-backend-qcwj.onrender.com/api/contact";
     
     try {
       const response = await fetch(backendUrl, {
