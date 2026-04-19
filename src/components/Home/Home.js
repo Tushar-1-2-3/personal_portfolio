@@ -10,79 +10,157 @@ import {
 import { FaLinkedinIn } from "react-icons/fa";
 
 function Home() {
-  // Floating animation variants
-  const floatVariants = {
+  // Liquid motion variants for background
+  const liquidVariants = {
     animate: {
-      y: [0, -20, 0],
+      borderRadius: ["30% 70% 70% 30% / 30% 30% 70% 70%", "70% 30% 30% 70% / 70% 70% 30% 30%", "30% 70% 70% 30% / 30% 30% 70% 70%"],
+      scale: [1, 1.1, 1],
+      rotate: [0, 10, -10, 0],
       transition: {
-        duration: 3,
+        duration: 8,
         repeat: Infinity,
         ease: "easeInOut"
       }
     }
   };
 
-  // Glowing orb variants
-  const glowVariants = {
-    animate: {
-      scale: [1, 1.2, 1],
-      opacity: [0.3, 0.6, 0.3],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
-  };
+  // Particle system
+  const particles = Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 6 + 2,
+    duration: Math.random() * 5 + 3,
+    delay: Math.random() * 2
+  }));
 
-  // Text reveal animation
-  const textReveal = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.5
-      }
-    })
+  // Letter animation for name
+  const name = "TUSHAR BHAVIK";
+  const letters = name.split("");
+
+  // Line drawing animation
+  const lineVariants = {
+    initial: { pathLength: 0 },
+    animate: { pathLength: 1 },
+    transition: { duration: 2, ease: "easeInOut" }
   };
 
   return (
-    <section style={{ position: "relative", overflow: "hidden" }}>
-      {/* Background animated orbs */}
-      <div style={{
-        position: "absolute",
-        top: "10%",
-        left: "10%",
-        width: "300px",
-        height: "300px",
-        background: "radial-gradient(circle, rgba(199, 112, 240, 0.3) 0%, transparent 70%)",
-        borderRadius: "50%",
-        filter: "blur(60px)",
-        zIndex: 0
-      }}>
-        <motion.div variants={glowVariants} animate="animate" style={{ width: "100%", height: "100%" }} />
+    <section style={{ position: "relative", overflow: "hidden", minHeight: "100vh" }}>
+      {/* Ambient Background Motion - Liquid gradients */}
+      <div style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }}>
+        <motion.div
+          style={{
+            position: "absolute",
+            top: "-10%",
+            left: "-10%",
+            width: "50%",
+            height: "50%",
+            background: "linear-gradient(135deg, rgba(199, 112, 240, 0.4) 0%, rgba(98, 54, 134, 0.2) 100%)",
+            filter: "blur(80px)"
+          }}
+          variants={liquidVariants}
+          animate="animate"
+        />
+        <motion.div
+          style={{
+            position: "absolute",
+            bottom: "-10%",
+            right: "-10%",
+            width: "60%",
+            height: "60%",
+            background: "linear-gradient(225deg, rgba(98, 54, 134, 0.3) 0%, rgba(199, 112, 240, 0.2) 100%)",
+            filter: "blur(100px)"
+          }}
+          variants={liquidVariants}
+          animate="animate"
+          transition={{ delay: 2 }}
+        />
+        <motion.div
+          style={{
+            position: "absolute",
+            top: "40%",
+            left: "30%",
+            width: "40%",
+            height: "40%",
+            background: "radial-gradient(circle, rgba(199, 112, 240, 0.2) 0%, transparent 70%)",
+            filter: "blur(60px)"
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.5, 0.3],
+            transition: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+          }}
+        />
       </div>
 
-      <div style={{
-        position: "absolute",
-        bottom: "20%",
-        right: "5%",
-        width: "400px",
-        height: "400px",
-        background: "radial-gradient(circle, rgba(98, 54, 134, 0.2) 0%, transparent 70%)",
-        borderRadius: "50%",
-        filter: "blur(80px)",
-        zIndex: 0
-      }}>
-        <motion.div variants={glowVariants} animate="animate" style={{ width: "100%", height: "100%" }} transition={{ delay: 1 }} />
-      </div>
+      {/* Floating particles */}
+      {particles.map((particle) => (
+        <motion.div
+          key={particle.id}
+          style={{
+            position: "absolute",
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            width: particle.size,
+            height: particle.size,
+            background: "rgba(199, 112, 240, 0.6)",
+            borderRadius: "50%",
+            filter: "blur(1px)",
+            zIndex: 0
+          }}
+          animate={{
+            y: [0, -100, 0],
+            x: [0, 50, -50, 0],
+            opacity: [0.3, 0.8, 0.3],
+            scale: [1, 1.5, 1]
+          }}
+          transition={{
+            duration: particle.duration,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: particle.delay
+          }}
+        />
+      ))}
+
+      {/* Animated SVG lines */}
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0, opacity: 0.1 }}>
+        <motion.line
+          x1="0" y1="20%" x2="100%" y2="20%"
+          stroke="#c770f0" strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 3, delay: 0.5 }}
+        />
+        <motion.line
+          x1="0" y1="80%" x2="100%" y2="80%"
+          stroke="#c770f0" strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 3, delay: 1 }}
+        />
+        <motion.line
+          x1="20%" y1="0" x2="20%" y2="100%"
+          stroke="#623686" strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 3, delay: 1.5 }}
+        />
+        <motion.line
+          x1="80%" y1="0" x2="80%" y2="100%"
+          stroke="#623686" strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 3, delay: 2 }}
+        />
+      </svg>
 
       <Container fluid className="home-section" id="home" style={{ position: "relative", zIndex: 1 }}>
         <Container className="home-content">
           <Row>
             <Col md={7} className="home-header">
+              {/* Expressive Typography - Glitch effect on hover */}
               <motion.h1
                 style={{ paddingBottom: 15 }}
                 className="heading"
@@ -102,30 +180,41 @@ function Home() {
                 </motion.span>
               </motion.h1>
 
+              {/* Animated name with staggered letter animation */}
               <motion.h1
                 className="heading-name"
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
               >
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  I'M
-                </motion.span>
-                {" "}
-                <motion.strong
-                  className="main-name"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                  whileHover={{ scale: 1.1, color: "#c770f0" }}
-                  style={{ display: "inline-block", cursor: "default" }}
-                >
-                  TUSHAR BHAVIK
-                </motion.strong>
+                I'M{" "}
+                <div style={{ display: "inline-block", overflow: "hidden" }}>
+                  {letters.map((letter, index) => (
+                    <motion.span
+                      key={index}
+                      style={{
+                        display: "inline-block",
+                        fontWeight: "bold",
+                        color: letter === " " ? "inherit" : "#c770f0"
+                      }}
+                      initial={{ y: 50, opacity: 0, rotate: 10 }}
+                      animate={{ y: 0, opacity: 1, rotate: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: 0.5 + index * 0.05,
+                        type: "spring",
+                        stiffness: 100
+                      }}
+                      whileHover={{ 
+                        scale: 1.2, 
+                        color: "#a855f7",
+                        textShadow: "0 0 20px rgba(199, 112, 240, 0.8)"
+                      }}
+                    >
+                      {letter}
+                    </motion.span>
+                  ))}
+                </div>
               </motion.h1>
 
               <motion.div
@@ -137,26 +226,35 @@ function Home() {
                 <Type />
               </motion.div>
 
-              {/* CTA Buttons */}
+              {/* CTA Buttons with morphing hover effects */}
               <motion.div
                 style={{ marginTop: "30px", display: "flex", gap: "20px", flexWrap: "wrap" }}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
               >
                 <motion.a
                   href="#contact"
                   style={{
-                    padding: "12px 30px",
-                    background: "linear-gradient(135deg, #623686, #c770f0)",
+                    padding: "14px 35px",
+                    background: "linear-gradient(135deg, #623686, #c770f0, #a855f7)",
+                    backgroundSize: "200% 200%",
                     color: "white",
                     textDecoration: "none",
-                    borderRadius: "25px",
+                    borderRadius: "30px",
                     fontWeight: "bold",
                     border: "none",
-                    cursor: "pointer"
+                    cursor: "pointer",
+                    position: "relative",
+                    overflow: "hidden"
                   }}
-                  whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(199, 112, 240, 0.4)" }}
+                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    boxShadow: "0 0 40px rgba(199, 112, 240, 0.6)",
+                    borderRadius: "40px"
+                  }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Get In Touch
@@ -164,16 +262,22 @@ function Home() {
                 <motion.a
                   href="#projects"
                   style={{
-                    padding: "12px 30px",
+                    padding: "14px 35px",
                     background: "transparent",
                     color: "#c770f0",
                     textDecoration: "none",
-                    borderRadius: "25px",
+                    borderRadius: "30px",
                     fontWeight: "bold",
                     border: "2px solid #c770f0",
-                    cursor: "pointer"
+                    cursor: "pointer",
+                    position: "relative"
                   }}
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(199, 112, 240, 0.1)" }}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    backgroundColor: "rgba(199, 112, 240, 0.15)",
+                    borderColor: "#a855f7",
+                    boxShadow: "0 0 30px rgba(199, 112, 240, 0.4)"
+                  }}
                   whileTap={{ scale: 0.95 }}
                 >
                   View Projects
@@ -183,71 +287,35 @@ function Home() {
 
             <Col md={5} style={{ paddingBottom: 20 }}>
               <motion.div
-                variants={floatVariants}
-                animate="animate"
+                animate={{
+                  y: [0, -15, 0],
+                  rotate: [-2, 2, -2]
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
               >
                 <motion.img
                   src={homeLogo}
                   alt="home pic"
                   className="img-fluid"
                   style={{ maxHeight: "450px" }}
-                  initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+                  initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
                   animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  transition={{ duration: 1, delay: 0.3 }}
+                  transition={{ duration: 1.2, delay: 0.3, type: "spring", stiffness: 100 }}
                   whileHover={{ 
-                    scale: 1.1, 
+                    scale: 1.15, 
                     rotate: 5,
-                    filter: "drop-shadow(0 0 20px rgba(199, 112, 240, 0.6))"
+                    filter: "drop-shadow(0 0 30px rgba(199, 112, 240, 0.8))",
+                    cursor: "grab"
                   }}
+                  drag
+                  dragConstraints={{ left: -20, right: 20, top: -20, bottom: 20 }}
+                  whileDrag={{ scale: 1.1, cursor: "grabbing" }}
                 />
               </motion.div>
-
-              {/* Decorative floating elements */}
-              <motion.div
-                style={{
-                  position: "absolute",
-                  top: "20%",
-                  right: "10%",
-                  width: "20px",
-                  height: "20px",
-                  background: "#c770f0",
-                  borderRadius: "50%",
-                  opacity: 0.6
-                }}
-                animate={{
-                  y: [0, -30, 0],
-                  x: [0, 20, 0],
-                  opacity: [0.6, 1, 0.6]
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              <motion.div
-                style={{
-                  position: "absolute",
-                  bottom: "30%",
-                  right: "20%",
-                  width: "15px",
-                  height: "15px",
-                  background: "#623686",
-                  borderRadius: "50%",
-                  opacity: 0.5
-                }}
-                animate={{
-                  y: [0, -25, 0],
-                  x: [0, -15, 0],
-                  opacity: [0.5, 0.8, 0.5]
-                }}
-                transition={{
-                  duration: 3.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5
-                }}
-              />
             </Col>
           </Row>
         </Container>
@@ -286,12 +354,16 @@ function Home() {
                     target="_blank"
                     rel="noreferrer"
                     className="icon-colour home-social-icons"
-                    whileHover={{ scale: 1.2, rotate: 5, boxShadow: "0 0 20px rgba(199, 112, 240, 0.6)" }}
+                    whileHover={{ 
+                      scale: 1.3, 
+                      rotate: 360,
+                      boxShadow: "0 0 30px rgba(199, 112, 240, 0.8)"
+                    }}
                     whileTap={{ scale: 0.9 }}
                     initial={{ opacity: 0, scale: 0 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
+                    transition={{ duration: 0.6, delay: 0.3, type: "spring" }}
                   >
                     <AiFillGithub />
                   </motion.a>
@@ -302,12 +374,16 @@ function Home() {
                     target="_blank"
                     rel="noreferrer"
                     className="icon-colour home-social-icons"
-                    whileHover={{ scale: 1.2, rotate: -5, boxShadow: "0 0 20px rgba(199, 112, 240, 0.6)" }}
+                    whileHover={{ 
+                      scale: 1.3, 
+                      rotate: -360,
+                      boxShadow: "0 0 30px rgba(199, 112, 240, 0.8)"
+                    }}
                     whileTap={{ scale: 0.9 }}
                     initial={{ opacity: 0, scale: 0 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
+                    transition={{ duration: 0.6, delay: 0.4, type: "spring" }}
                   >
                     <FaLinkedinIn />
                   </motion.a>
