@@ -38,8 +38,17 @@ const contactSchema = new mongoose.Schema({
 const Contact = mongoose.model('Contact', contactSchema);
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['https://69e4accb35eafee7600bcc62--tusharbhavik.netlify.app', 'https://tusharbhavik.netlify.app', 'http://localhost:3000'],
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 app.use(express.json());
+
+// Health check endpoint to wake up the service
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Backend is running' });
+});
 
 // API Route
 app.post('/api/contact', async (req, res) => {
