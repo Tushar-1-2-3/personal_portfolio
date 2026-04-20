@@ -38,13 +38,6 @@ function Home() {
   const name = "TUSHAR BHAVIK";
   const letters = name.split("");
 
-  // Line drawing animation
-  const lineVariants = {
-    initial: { pathLength: 0 },
-    animate: { pathLength: 1 },
-    transition: { duration: 2, ease: "easeInOut" }
-  };
-
   return (
     <section style={{ position: "relative", overflow: "hidden", minHeight: "100vh" }}>
       {/* Ambient Background Motion - Liquid gradients */}
